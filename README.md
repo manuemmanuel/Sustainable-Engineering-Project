@@ -1,8 +1,5 @@
-# Sustainable Engineering Project
 
-
-## Carbon Footprint Data Representation and Analysis
-<img title="a screenshot of the web app" alt="Web" src="images/DashApp.jpeg">
+# Carbon Footprint Data Representation and Analysis
 
 This is an interactive web application designed to visualize and analyze carbon footprint data across different countries.
 ## Usage
@@ -39,4 +36,17 @@ Start the server
 ```bash
   python3 app.py
 ```
+
+## Screenshots
+<img title="a screenshot of the web app" alt="Web" src="images/DashApp.jpeg">
+
+## Tech Stack
+
+**Plotly:** Plotly is a free and open source library that lets you create interactive, publication-quality graphs for various purposes.
+
+**Dash:**  Dash is a Python framework that ties modern UI elements to your analytical Python code. 
+
+**Pandas:**  Pandas is a Python library for data analysis and visualization.
+
+**HTML and CSS:** Used within the Dash framework to create UI.
 
