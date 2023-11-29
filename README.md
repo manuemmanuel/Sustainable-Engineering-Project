@@ -50,3 +50,12 @@ Start the server
 
 **HTML and CSS:** Used within the Dash framework to create UI.
 
+## Features
+
+- Drop-Down menu for selecting countries
+- Download plot as png
+- Zoom in and Zoom out for the graph view
+- Pan through the graph
+- Autoscale
+- Brief report on each country's carbon footprint
+
