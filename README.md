@@ -2,12 +2,17 @@
 
 
 ## Carbon Footprint Data Representation and Analysis
-
+<img title="a screenshot of the web app" alt="Web" src="images/DashApp.jpeg">
 
 This is an interactive web application designed to visualize and analyze carbon footprint data across different countries.
 ## Usage
 
 Navigate to the hosted [website](https://sustainable-engineering-project-production.up.railway.app/)
+
+### Website Url
+```bash
+ https://sustainable-engineering-project-production.up.railway.app/
+```
 
 ## Run Locally
 
