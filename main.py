@@ -23,7 +23,7 @@ dark_colours = {
 
 light_colours = {
     'background': '#FFFFFF',
-    'text': '#000000',
+    'text': '#000000',  # Updated to black
     'dropdown-background': '#F0F0F0',
     'dropdown-text': '#000000',
     'graph-background': '#E5E5E5',  # Adjusted background color for better contrast
