@@ -60,7 +60,7 @@ app.layout = html.Div([
         labelStyle={'display': 'block', 'margin-top': '10px', 'font-family': 'monospace'},
     ),
     dcc.Graph(id='line-plot', style={'margin-top': '20px', 'margin-bottom': '20px', 'font-family': 'monospace'}),
-    html.Div(id='report', style={'margin-top': '20px', 'font-family': 'monospace', 'font-size': '1.2em'}),
+    html.Div(id='report', style={'margin-top': '20px', 'font-family': 'monospace', 'font-size': '1.5em'}),  # Increased font size
     html.Footer('@ Sustainable Engineering Project by Manu Emmanuel, Felix Jobi, and Nagaraj Menon K S', id='footer', style={'text-align': 'center', 'margin-top': '30px', 'color': dark_colours['text'], 'font-family': 'monospace'}),
 ], id='main-div', style={'height': '100vh', 'margin': 'auto', 'font-family': 'monospace', 'padding': '20px', 'background-color': light_colours['background']})  # Set default to Light Mode
 
@@ -102,7 +102,7 @@ def report(selected_country, selected_theme):
 
     country_dropdown_style = {'color': colours['dropdown-text'], 'font-family': 'monospace'}
 
-    report_style = {'color': colours['text'], 'font-family': 'monospace'}
+    report_style = {'color': colours['text'], 'font-family': 'monospace', 'font-size': '1.5em'}  # Increased font size
 
     footer_style = {'text-align': 'center', 'margin-top': '30px', 'color': colours['text'], 'font-family': 'monospace'}
 
