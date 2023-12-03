@@ -32,7 +32,7 @@ light_colours = {
 
 app.layout = html.Div([
     html.Div([
-        html.H1('Carbon Footprint Data Representation', id='title', style={'text-align': 'center', 'font-size': '2em', 'margin-bottom': '10px', 'color': dark_colours['text'], 'font-family': 'monospace'}),
+        html.H1('Carbon Footprint Data Representation', id='title', style={'text-align': 'center', 'font-size': '2em', 'margin-bottom': '10px', 'font-family': 'monospace'}),
         dcc.Dropdown(
             id='country-dropdown',
             options=[{'label': country, 'value': country} for country in df['country'].unique()],
@@ -41,7 +41,6 @@ app.layout = html.Div([
                 'margin': 'auto',
                 'font-family': 'monospace',
                 'margin-bottom': '20px',
-                'color': dark_colours['dropdown-text'],
                 'width': '60% !important',  # Add important rule to enforce width
             },
             searchable=True,
@@ -58,21 +57,36 @@ app.layout = html.Div([
         inline=True,
         labelStyle={'display': 'block', 'margin-top': '10px', 'font-family': 'monospace'},
     ),
-    dcc.Graph(id='line-plot', style={'margin-top': '20px', 'margin-bottom': '20px', 'font-family': 'monospace'}),
+    dcc.Graph(id='line-plot', style={'margin-top': '20px', 'margin-bottom': '20px'}),
     html.Div(id='report', style={'margin-top': '20px', 'font-family': 'monospace', 'font-size': '1.5em'}),  # Increased font size
-    html.Footer('@ Sustainable Engineering Project by Manu Emmanuel, Felix Jobi, and Nagaraj Menon K S', id='footer', style={'text-align': 'center', 'margin-top': '30px', 'color': dark_colours['text'], 'font-family': 'monospace'}),
-], id='main-div', style={'height': '100vh', 'margin': 'auto', 'font-family': 'monospace', 'padding': '20px', 'background-color': light_colours['background']})  # Set default to Light Mode
+    html.Footer('@ Sustainable Engineering Project by Manu Emmanuel, Felix Jobi, and Nagaraj Menon K S', id='footer', style={'text-align': 'center', 'margin-top': '30px', 'font-family': 'monospace'}),
+], id='main-div')
+
+# Dynamic styles for dark and light modes
+app.layout.children.append(html.Style(id='style', children=[]))
 
 @app.callback(
     [Output('line-plot', 'figure'),
-     Output('report', 'children')],
+     Output('report', 'children'),
+     Output('style', 'children')],
     [Input('country-dropdown', 'value'),
      Input('theme-toggle', 'value')]
 )
 def report(selected_country, selected_theme):
     selected_data = df[df['country'] == selected_country]
 
-    colours = dark_colours if selected_theme == 'dark' else light_colours
+    if selected_theme == 'dark':
+        colours = dark_colours
+        dynamic_styles = [
+            {'property': 'background-color', 'value': dark_colours['background']},
+            {'property': 'color', 'value': dark_colours['text']},
+        ]
+    else:
+        colours = light_colours
+        dynamic_styles = [
+            {'property': 'background-color', 'value': light_colours['background']},
+            {'property': 'color', 'value': light_colours['text']},
+        ]
 
     fig = px.line(selected_data, x='year', y='co2_per_capita',
                   labels={'co2_per_capita': 'CO2 per Capita', 'year': 'Year'},
@@ -90,9 +104,9 @@ def report(selected_country, selected_theme):
 
     fig.update_traces(line=dict(color=colours['graph-line-color']))
 
-    report = generate_report(selected_country, selected_data)
+    report_text = generate_report(selected_country, selected_data)
 
-    return fig, report
+    return fig, report_text, dynamic_styles
 
 def generate_report(country, data):
     start_year = data['year'].min()
