@@ -32,7 +32,7 @@ light_colours = {
 
 app.layout = html.Div([
     html.Div([
-        html.H1('Carbon Footprint Data Representation', style={'text-align': 'center', 'font-size': '2em', 'margin-bottom': '10px', 'color': dark_colours['text']}),
+        html.H1('Carbon Footprint Data Representation', id='title', style={'text-align': 'center', 'font-size': '2em', 'margin-bottom': '10px', 'color': dark_colours['text']}),
         html.Label('Select Country:', style={'margin-bottom': '10px', 'font-family': 'monospace', 'color': dark_colours['text'], 'text-align': 'center'}),
         dcc.Dropdown(
             id='country-dropdown',
@@ -65,7 +65,8 @@ app.layout = html.Div([
 
 @app.callback(
     [Output('line-plot', 'figure'),
-     Output('report', 'children')],
+     Output('report', 'children'),
+     Output('title', 'style')],
     [Input('country-dropdown', 'value'),
      Input('theme-toggle', 'value')]
 )
@@ -90,9 +91,11 @@ def report(selected_country, selected_theme):
 
     fig.update_traces(line=dict(color=colours['graph-line-color']))
 
-    report = generate_report(selected_country, selected_data)
+    report_text = generate_report(selected_country, selected_data)
 
-    return fig, report
+    title_style = {'color': colours['text']}  # Set the text color of the title dynamically
+
+    return fig, report_text, title_style
 
 def generate_report(country, data):
     start_year = data['year'].min()
