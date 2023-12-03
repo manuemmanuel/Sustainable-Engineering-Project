@@ -32,7 +32,7 @@ light_colours = {
 
 app.layout = html.Div([
     html.Div([
-        html.H1('Carbon Footprint Data Representation', style={'color': dark_colours['text'], 'text-align': 'center', 'font-size': '2em', 'margin-bottom': '10px'}),
+        html.H1('Carbon Footprint Data Representation', style={'text-align': 'center', 'font-size': '2em', 'margin-bottom': '10px', 'color': dark_colours['text']}),
         html.Label('Select Country:', style={'margin-bottom': '10px', 'font-family': 'monospace', 'color': dark_colours['text'], 'text-align': 'center'}),
         dcc.Dropdown(
             id='country-dropdown',
