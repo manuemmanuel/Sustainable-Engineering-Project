@@ -25,7 +25,7 @@ light_colours = {
     'background': '#FFFFFF',
     'text': '#000000',  # Updated to black
     'dropdown-background': '#F0F0F0',
-    'dropdown-text': '#000000',
+    'dropdown-text': '#000000',  # Updated to black
     'graph-background': '#E5E5E5',  # Adjusted background color for better contrast
     'graph-line-color': '#4285F4',
 }
@@ -33,7 +33,7 @@ light_colours = {
 app.layout = html.Div([
     html.Div([
         html.H1('Carbon Footprint Data Representation', id='title', style={'text-align': 'center', 'font-size': '2em', 'margin-bottom': '10px', 'color': dark_colours['text']}),
-        html.Label('Select Country:', style={'margin-bottom': '10px', 'font-family': 'monospace', 'color': dark_colours['text'], 'text-align': 'center'}),
+        html.Label('Select Country:', style={'margin-bottom': '10px', 'font-family': 'monospace', 'text-align': 'center', 'color': dark_colours['text']}),
         dcc.Dropdown(
             id='country-dropdown',
             options=[{'label': country, 'value': country} for country in df['country'].unique()],
@@ -66,7 +66,8 @@ app.layout = html.Div([
 @app.callback(
     [Output('line-plot', 'figure'),
      Output('report', 'children'),
-     Output('title', 'style')],
+     Output('title', 'style'),
+     Output('country-dropdown', 'style')],
     [Input('country-dropdown', 'value'),
      Input('theme-toggle', 'value')]
 )
@@ -93,9 +94,11 @@ def report(selected_country, selected_theme):
 
     report_text = generate_report(selected_country, selected_data)
 
-    title_style = {'color': colours['text']}  # Set the text color of the title dynamically
+    title_style = {'color': colours['text'], 'text-align': 'center'}  # Set the text color of the title dynamically and center-align
 
-    return fig, report_text, title_style
+    country_dropdown_style = {'color': colours['dropdown-text']}  # Set the text color of the country dropdown dynamically
+
+    return fig, report_text, title_style, country_dropdown_style
 
 def generate_report(country, data):
     start_year = data['year'].min()
