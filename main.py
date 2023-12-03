@@ -62,7 +62,7 @@ app.layout = html.Div([
     dcc.Graph(id='line-plot', style={'margin-top': '20px', 'margin-bottom': '20px'}),  # Add margin-top and margin-bottom to create space
     html.Div(id='report', style={'margin-top': '20px', 'font-family': 'monospace', 'font-size': '1.2em'}),
     html.Footer('@ Sustainable Engineering Project by Manu Emmanuel, Felix Jobi, and Nagaraj Menon K S', id='footer', style={'text-align': 'center', 'margin-top': '30px', 'color': dark_colours['text']}),
-], style={'height': '100vh', 'margin': 'auto', 'font-family': 'monospace', 'padding': '20px'})  # Add padding to lower position
+], id='main-div', style={'height': '100vh', 'margin': 'auto', 'font-family': 'monospace', 'padding': '20px', 'background-color': dark_colours['background']})  # Add padding to lower position
 
 @app.callback(
     [Output('line-plot', 'figure'),
@@ -70,7 +70,8 @@ app.layout = html.Div([
      Output('title', 'style'),
      Output('country-dropdown', 'style'),
      Output('report', 'style'),
-     Output('footer', 'style')],
+     Output('footer', 'style'),
+     Output('main-div', 'style')],  # Output for changing the background color of the entire app
     [Input('country-dropdown', 'value'),
      Input('theme-toggle', 'value')]
 )
@@ -105,7 +106,9 @@ def report(selected_country, selected_theme):
 
     footer_style = {'text-align': 'center', 'margin-top': '30px', 'color': colours['text']}  # Set the text color of the footer dynamically
 
-    return fig, report_text, title_style, country_dropdown_style, report_style, footer_style
+    main_div_style = {'background-color': colours['background']}  # Set the background color of the entire app dynamically
+
+    return fig, report_text, title_style, country_dropdown_style, report_style, footer_style, main_div_style
 
 def generate_report(country, data):
     start_year = data['year'].min()
