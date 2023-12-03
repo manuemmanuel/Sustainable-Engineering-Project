@@ -26,7 +26,7 @@ light_colours = {
     'text': '#000000',
     'dropdown-background': '#F0F0F0',
     'dropdown-text': '#000000',
-    'graph-background': '#F0F0F0',
+    'graph-background': '#E5E5E5',  # Adjusted background color for better contrast
     'graph-line-color': '#4285F4',
 }
 
@@ -94,6 +94,21 @@ def report(selected_country, selected_theme):
 
     return fig, report
 
+def generate_report(country, data):
+    start_year = data['year'].min()
+    end_year = data['year'].max()
+    highest_footprint = data.loc[data['co2_per_capita'].idxmax()]
+
+    template = f"""
+    {country} Carbon Footprint Report:
+    
+    Data from {start_year} to {end_year} is shown in the graph.
+    
+    The highest recorded carbon footprint for {country} was in {highest_footprint['year']} with a value of {highest_footprint['co2_per_capita']} CO2 per capita.
+
+    """
+
+    return template
+
 if __name__ == '__main__':
     app.run_server(debug=True)
-
