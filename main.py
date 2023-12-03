@@ -33,7 +33,6 @@ light_colours = {
 app.layout = html.Div([
     html.Div([
         html.H1('Carbon Footprint Data Representation', id='title', style={'text-align': 'center', 'font-size': '2em', 'margin-bottom': '10px', 'color': dark_colours['text'], 'font-family': 'monospace'}),
-        html.Label('Select Country:', style={'margin-bottom': '10px', 'font-family': 'monospace', 'text-align': 'center', 'color': dark_colours['text']}),
         dcc.Dropdown(
             id='country-dropdown',
             options=[{'label': country, 'value': country} for country in df['country'].unique()],
