@@ -39,7 +39,7 @@ app.layout = html.Div([
             options=[{'label': country, 'value': country} for country in df['country'].unique()],
             value='India',
             style={
-                'width': '80%',
+                'width': '60%',  # Adjusted width
                 'margin': 'auto',
                 'font-family': 'monospace',
                 'margin-bottom': '20px',
