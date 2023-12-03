@@ -19,7 +19,7 @@ light_colours = {
     'dropdown-text': '#000000',
     'graph-background': '#E5E5E5',
     'graph-line-color': '#4285F4',
-    'box-border-color': '#000000',  # Border color for the report box
+    'box-border-color': '#000000',  
 }
 
 app.layout = html.Div([
@@ -33,7 +33,7 @@ app.layout = html.Div([
                 'margin': 'auto',
                 'font-family': 'monospace',
                 'margin-bottom': '20px',
-                'width': '60% !important',  # Add important rule to enforce width
+                'width': '60% !important', 
             },
             searchable=True,
             clearable=True,
