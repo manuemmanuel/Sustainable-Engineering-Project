@@ -43,6 +43,7 @@ app.layout = html.Div([
                 'margin': 'auto',
                 'font-family': 'monospace',
                 'margin-bottom': '20px',
+                'color': dark_colours['dropdown-text'],  # Set initial text color
             },
             searchable=True,
             clearable=True,
@@ -59,15 +60,17 @@ app.layout = html.Div([
         labelStyle={'display': 'block', 'margin-top': '10px'},
     ),
     dcc.Graph(id='line-plot', style={'margin-top': '20px', 'margin-bottom': '20px'}),  # Add margin-top and margin-bottom to create space
-    html.Div(id='report', style={'margin-top': '20px', 'font-family': 'monospace', 'color': dark_colours['text'], 'font-size': '1.2em'}),  # Increase text size
-    html.Footer('@ Sustainable Engineering Project by Manu Emmanuel, Felix Jobi, and Nagaraj Menon K S', style={'text-align': 'center', 'color': dark_colours['text'], 'margin-top': '30px'}),
+    html.Div(id='report', style={'margin-top': '20px', 'font-family': 'monospace', 'font-size': '1.2em'}),
+    html.Footer('@ Sustainable Engineering Project by Manu Emmanuel, Felix Jobi, and Nagaraj Menon K S', id='footer', style={'text-align': 'center', 'margin-top': '30px', 'color': dark_colours['text']}),
 ], style={'height': '100vh', 'margin': 'auto', 'font-family': 'monospace', 'padding': '20px'})  # Add padding to lower position
 
 @app.callback(
     [Output('line-plot', 'figure'),
      Output('report', 'children'),
      Output('title', 'style'),
-     Output('country-dropdown', 'style')],
+     Output('country-dropdown', 'style'),
+     Output('report', 'style'),
+     Output('footer', 'style')],
     [Input('country-dropdown', 'value'),
      Input('theme-toggle', 'value')]
 )
@@ -98,7 +101,11 @@ def report(selected_country, selected_theme):
 
     country_dropdown_style = {'color': colours['dropdown-text']}  # Set the text color of the country dropdown dynamically
 
-    return fig, report_text, title_style, country_dropdown_style
+    report_style = {'color': colours['text']}  # Set the text color of the report dynamically
+
+    footer_style = {'text-align': 'center', 'margin-top': '30px', 'color': colours['text']}  # Set the text color of the footer dynamically
+
+    return fig, report_text, title_style, country_dropdown_style, report_style, footer_style
 
 def generate_report(country, data):
     start_year = data['year'].min()
