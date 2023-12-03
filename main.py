@@ -23,16 +23,16 @@ dark_colours = {
 
 light_colours = {
     'background': '#FFFFFF',
-    'text': '#000000',  # Updated to black
+    'text': '#000000',
     'dropdown-background': '#F0F0F0',
-    'dropdown-text': '#000000',  # Updated to black
-    'graph-background': '#E5E5E5',  # Adjusted background color for better contrast
+    'dropdown-text': '#000000',
+    'graph-background': '#E5E5E5',
     'graph-line-color': '#4285F4',
 }
 
 app.layout = html.Div([
     html.Div([
-        html.H1('Carbon Footprint Data Representation', id='title', style={'text-align': 'center', 'font-size': '2em', 'margin-bottom': '10px', 'color': dark_colours['text']}),
+        html.H1('Carbon Footprint Data Representation', id='title', style={'text-align': 'center', 'font-size': '2em', 'margin-bottom': '10px', 'color': dark_colours['text'], 'font-family': 'monospace'}),
         html.Label('Select Country:', style={'margin-bottom': '10px', 'font-family': 'monospace', 'text-align': 'center', 'color': dark_colours['text']}),
         dcc.Dropdown(
             id='country-dropdown',
@@ -43,26 +43,26 @@ app.layout = html.Div([
                 'margin': 'auto',
                 'font-family': 'monospace',
                 'margin-bottom': '20px',
-                'color': dark_colours['dropdown-text'],  # Set initial text color
+                'color': dark_colours['dropdown-text'],
             },
             searchable=True,
             clearable=True,
             multi=False,
         ),
     ]),
-    dcc.RadioItems(
+    dcc.Checklist(
         id='theme-toggle',
         options=[
             {'label': 'Dark Mode', 'value': 'dark'},
-            {'label': 'Light Mode', 'value': 'light'},
         ],
-        value='dark',  # Default mode
-        labelStyle={'display': 'block', 'margin-top': '10px'},
+        value=[],  # Default mode (empty list for Light Mode)
+        inline=True,
+        labelStyle={'display': 'block', 'margin-top': '10px', 'font-family': 'monospace'},
     ),
-    dcc.Graph(id='line-plot', style={'margin-top': '20px', 'margin-bottom': '20px'}),  # Add margin-top and margin-bottom to create space
+    dcc.Graph(id='line-plot', style={'margin-top': '20px', 'margin-bottom': '20px', 'font-family': 'monospace'}),
     html.Div(id='report', style={'margin-top': '20px', 'font-family': 'monospace', 'font-size': '1.2em'}),
-    html.Footer('@ Sustainable Engineering Project by Manu Emmanuel, Felix Jobi, and Nagaraj Menon K S', id='footer', style={'text-align': 'center', 'margin-top': '30px', 'color': dark_colours['text']}),
-], id='main-div', style={'height': '100vh', 'margin': 'auto', 'font-family': 'monospace', 'padding': '20px', 'background-color': dark_colours['background']})  # Add padding to lower position
+    html.Footer('@ Sustainable Engineering Project by Manu Emmanuel, Felix Jobi, and Nagaraj Menon K S', id='footer', style={'text-align': 'center', 'margin-top': '30px', 'color': dark_colours['text'], 'font-family': 'monospace'}),
+], id='main-div', style={'height': '100vh', 'margin': 'auto', 'font-family': 'monospace', 'padding': '20px', 'background-color': light_colours['background']})  # Set default to Light Mode
 
 @app.callback(
     [Output('line-plot', 'figure'),
@@ -71,14 +71,14 @@ app.layout = html.Div([
      Output('country-dropdown', 'style'),
      Output('report', 'style'),
      Output('footer', 'style'),
-     Output('main-div', 'style')],  # Output for changing the background color of the entire app
+     Output('main-div', 'style')],
     [Input('country-dropdown', 'value'),
      Input('theme-toggle', 'value')]
 )
 def report(selected_country, selected_theme):
     selected_data = df[df['country'] == selected_country]
 
-    colours = dark_colours if selected_theme == 'dark' else light_colours
+    colours = dark_colours if 'dark' in selected_theme else light_colours
 
     fig = px.line(selected_data, x='year', y='co2_per_capita',
                   labels={'co2_per_capita': 'CO2 per Capita', 'year': 'Year'},
@@ -98,15 +98,15 @@ def report(selected_country, selected_theme):
 
     report_text = generate_report(selected_country, selected_data)
 
-    title_style = {'color': colours['text'], 'text-align': 'center'}  # Set the text color of the title dynamically and center-align
+    title_style = {'color': colours['text'], 'text-align': 'center', 'font-family': 'monospace'}
 
-    country_dropdown_style = {'color': colours['dropdown-text']}  # Set the text color of the country dropdown dynamically
+    country_dropdown_style = {'color': colours['dropdown-text'], 'font-family': 'monospace'}
 
-    report_style = {'color': colours['text']}  # Set the text color of the report dynamically
+    report_style = {'color': colours['text'], 'font-family': 'monospace'}
 
-    footer_style = {'text-align': 'center', 'margin-top': '30px', 'color': colours['text']}  # Set the text color of the footer dynamically
+    footer_style = {'text-align': 'center', 'margin-top': '30px', 'color': colours['text'], 'font-family': 'monospace'}
 
-    main_div_style = {'background-color': colours['background']}  # Set the background color of the entire app dynamically
+    main_div_style = {'background-color': colours['background']}
 
     return fig, report_text, title_style, country_dropdown_style, report_style, footer_style, main_div_style
 
