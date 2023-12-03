@@ -24,7 +24,7 @@ light_colours = {
 
 app.layout = html.Div([
     html.Div([
-        html.H1('Carbon Footprint Data Representation', id='title', style={'text-align': 'center', 'font-size': '3em', 'margin-bottom': '10px', 'font-family': 'monospace'}),
+        html.H1('Carbon Footprint Data Representation', id='title', style={'text-align': 'center', 'font-size': '3em', 'margin-bottom': '20px', 'font-family': 'monospace'}),
         dcc.Dropdown(
             id='country-dropdown',
             options=[{'label': country, 'value': country} for country in df['country'].unique()],
@@ -42,10 +42,10 @@ app.layout = html.Div([
     ]),
     dcc.Graph(id='line-plot', style={'margin-top': '20px', 'margin-bottom': '20px'}),
     html.Div([
+        html.H3('Report', style={'text-align': 'center', 'color': light_colours['text'], 'margin-bottom': '10px', 'font-family': 'monospace', 'font-size': '2em'}),
         html.Div(id='report-box', children=[
-            html.H3('Report', style={'text-align': 'center', 'color': light_colours['text'], 'margin-bottom': '10px'}),
             html.Div(id='report', style={'font-family': 'monospace', 'font-size': '1.5em'}),
-        ], style={'border': f'2px solid {light_colours["box-border-color"]}', 'padding': '10px', 'border-radius': '10px'}),
+        ], style={'border': f'2px solid {light_colours["box-border-color"]}', 'padding': '10px', 'border-radius': '10px', 'margin': 'auto', 'width': '60%'}),
     ], style={'margin-top': '20px'}),
     html.Footer('@ Sustainable Engineering Project by Manu Emmanuel, Felix Jobi, and Nagaraj Menon K S', id='footer', style={'text-align': 'center', 'margin-top': '30px', 'font-family': 'monospace'}),
 ], id='main-div', style={'background-color': '#FFFFFF', 'color': '#000000'})
