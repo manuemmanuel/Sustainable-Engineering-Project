@@ -63,7 +63,7 @@ app.layout = html.Div([
 ], id='main-div')
 
 # Dynamic styles for dark and light modes
-app.layout.children.append(html.Style(id='style', children=[]))
+app.layout.children.append(dcc.Markdown(id='style', children=[]))
 
 @app.callback(
     [Output('line-plot', 'figure'),
@@ -77,16 +77,20 @@ def report(selected_country, selected_theme):
 
     if selected_theme == 'dark':
         colours = dark_colours
-        dynamic_styles = [
-            {'property': 'background-color', 'value': dark_colours['background']},
-            {'property': 'color', 'value': dark_colours['text']},
-        ]
+        dynamic_styles = f"""
+            #main-div {{
+                background-color: {colours['background']};
+                color: {colours['text']};
+            }}
+        """
     else:
         colours = light_colours
-        dynamic_styles = [
-            {'property': 'background-color', 'value': light_colours['background']},
-            {'property': 'color', 'value': light_colours['text']},
-        ]
+        dynamic_styles = f"""
+            #main-div {{
+                background-color: {colours['background']};
+                color: {colours['text']};
+            }}
+        """
 
     fig = px.line(selected_data, x='year', y='co2_per_capita',
                   labels={'co2_per_capita': 'CO2 per Capita', 'year': 'Year'},
@@ -106,7 +110,7 @@ def report(selected_country, selected_theme):
 
     report_text = generate_report(selected_country, selected_data)
 
-    return fig, report_text, dynamic_styles
+    return fig, report_text, [dynamic_styles]
 
 def generate_report(country, data):
     start_year = data['year'].min()
