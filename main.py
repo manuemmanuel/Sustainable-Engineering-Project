@@ -39,11 +39,11 @@ app.layout = html.Div([
             options=[{'label': country, 'value': country} for country in df['country'].unique()],
             value='India',
             style={
-                'width': '60%',  # Adjusted width
                 'margin': 'auto',
                 'font-family': 'monospace',
                 'margin-bottom': '20px',
                 'color': dark_colours['dropdown-text'],
+                'width': '60% !important',  # Add important rule to enforce width
             },
             searchable=True,
             clearable=True,
@@ -66,19 +66,14 @@ app.layout = html.Div([
 
 @app.callback(
     [Output('line-plot', 'figure'),
-     Output('report', 'children'),
-     Output('title', 'style'),
-     Output('country-dropdown', 'style'),
-     Output('report', 'style'),
-     Output('footer', 'style'),
-     Output('main-div', 'style')],
+     Output('report', 'children')],
     [Input('country-dropdown', 'value'),
      Input('theme-toggle', 'value')]
 )
 def report(selected_country, selected_theme):
     selected_data = df[df['country'] == selected_country]
 
-    colours = dark_colours if 'dark' in selected_theme else light_colours
+    colours = dark_colours if selected_theme == 'dark' else light_colours
 
     fig = px.line(selected_data, x='year', y='co2_per_capita',
                   labels={'co2_per_capita': 'CO2 per Capita', 'year': 'Year'},
@@ -96,19 +91,9 @@ def report(selected_country, selected_theme):
 
     fig.update_traces(line=dict(color=colours['graph-line-color']))
 
-    report_text = generate_report(selected_country, selected_data)
+    report = generate_report(selected_country, selected_data)
 
-    title_style = {'color': colours['text'], 'text-align': 'center', 'font-family': 'monospace'}
-
-    country_dropdown_style = {'color': colours['dropdown-text'], 'font-family': 'monospace'}
-
-    report_style = {'color': colours['text'], 'font-family': 'monospace', 'font-size': '1.5em'}  # Increased font size
-
-    footer_style = {'text-align': 'center', 'margin-top': '30px', 'color': colours['text'], 'font-family': 'monospace'}
-
-    main_div_style = {'background-color': colours['background']}
-
-    return fig, report_text, title_style, country_dropdown_style, report_style, footer_style, main_div_style
+    return fig, report
 
 def generate_report(country, data):
     start_year = data['year'].min()
